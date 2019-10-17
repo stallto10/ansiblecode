@@ -1,0 +1,14 @@
+---
+- name: leaning about apt
+  hosts: raiders
+  gather_facts: yes
+
+
+  tasks:
+         - name: ill steamlocomotive
+           apt:
+                   name: sl
+                   state: absent     
+           become: yes
+
+## ansible-playbook02apt.yml

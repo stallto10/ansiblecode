@@ -1,0 +1,17 @@
+---
+- name: leaning about apt
+  host: raiders
+  gather_facts: yes
+
+
+  task:
+          -name: install steamlocomotive
+           apt:
+                   name: sl
+                   state: present
+                   
+           become: yes
+
+
+             
+

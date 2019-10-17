@@ -1,0 +1,33 @@
+---
+# find a file 
+# register the results (save the results that come back)
+- name: Find files
+  find:                   
+         paths: "{{ pathy }}"
+         patterns: "{{ patt }}"
+         #size: 10m
+         recurse: yes
+  register: results
+
+- name: what the heck is in results 
+  debug:
+          var: results
+          verbosity: 1
+
+         
+#            
+#create a directory to store out results in 
+- name: create adir to saveoru stuff in
+  file:
+         path: ~/searchresults/
+         state: directory
+  delegate_to: localhost
+  #  run_once: yes
+# 
+# parse the results that come back (loop)
+# pull them back to the controller (fetch module)
+- fetch:
+         src: "{{ item.path}}"
+         dest: "~/searchresults/{{ inventory_hostname }}/"
+         flat: yes
+  loop: "{{ results.files}}"

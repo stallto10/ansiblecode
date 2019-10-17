@@ -1,0 +1,42 @@
+---
+- name: usning ansible to call python code
+  gather_facts: yes 
+  hosts: localhost
+  
+  tasks:
+          - name: call my python script 
+            script: ~/ans/scripts/parselog.py
+            args:
+              executable: python3
+
+          - name: load my yaml file that was just created
+            include_vars:
+                    name: ips
+                    file: ~/ans/files/parsed.ips
+
+          - name: Gather facts about a previously created image named image1
+            os_image_facts:
+                cloud: vasilis
+            image: image1
+            register: imgresults
+
+          - debug:
+                  var: imgresults
+
+          - name: set a new variable
+            set_fact:
+                    imguuid: imgresults.uuid   #<--- this value is found via debug:var:
+
+          - name: call template module (fill in the blanks)
+            template:
+                    src: /path/to/envfile.env.j2
+                    dest: /path/to/finished/envfile.env
+
+          - name: grab the vars off the envfile.env
+            include_vars:
+                    name: envvars
+                    file: /path/to/finished/envfile.env
+
+          - name: run heat
+            os_stack:
+

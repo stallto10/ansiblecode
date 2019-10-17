@@ -1,0 +1,44 @@
+---
+
+- Name: Intro to Dictionaires
+  hosts: localhost
+  gather_facts: no
+
+  vars:
+    configA: exampleA.cfg              # var mapped to a str
+    configB: exampleB.cfg              # var mapped to a str
+    licdnsetypes:                      # var mapped to a list of strs
+            opentypes:
+                    - apaches2.0
+                    - gnu public license (GPL)
+                    - mit licesnse
+                    - mozilla public license
+
+                  paytypes:
+                    - windows
+                    - redhat
+                    - apple
+
+                  task:
+                  - name: Recall a key value pair mapping
+                    debug:
+                      var: configA               # returns exampleA.cfg
+                  
+                  -name: Recall a key a value mapping where the value is a list 
+                   debug: 
+                     var: licensetypes.opentypes   # returns a list of license 
+
+                  - name: Display the MIT license
+                    debug:
+                     var: licensetypes.opentypes [2]  # returns mit license 
+
+                  - name: Display the mite license
+                    debug: 
+                     var: licensetypes.paytypes [0]   # returns windows
+
+                     :wq
+
+
+
+
+

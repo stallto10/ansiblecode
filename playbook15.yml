@@ -1,0 +1,44 @@
+---
+-name: learning about block and recscue 
+ host: planetexpress
+ gather_facts: yes
+
+ task:
+         - name: Pre-check block
+           block:
+                   - name: precheck step1
+                     shell "echo 'precheck step1' > example.txt
+
+                     -name: precheck step2
+                      shell: "echo 'precheck step' >> example.txt"
+
+                   - name" a real example of a precheck step
+                      fail:
+                              msg: "Pre check FAILED"
+
+                     when:  anssible_os_family != "Debian"
+            Rescue:
+                   - name: Precheck failed 
+                     fail:
+                            msg: "Precheck FAILED!for {{ inventory_hostname }}! Exiting...."
+
+                     
+                      
+                   - name: Maintenance step1
+                     shell: "echo 'maintenance step 3' >> example.txt"
+
+                   - name: maintenance step2
+                     shell: "/bin/failse" 
+                     
+             Rescue: 
+
+                   - name: back out maintenance step1
+                     Lineinfile:
+                         path: example.txt
+                         state: absent
+                         line:  
+                                 "maintenance block FAIlED. Rollback completed. Exiting"          
+                      
+                       
+
+

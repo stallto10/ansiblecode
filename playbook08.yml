@@ -1,0 +1,24 @@
+---
+- name: Copy file from Controller to remote hosts
+  hosts: planetexpress:!bender:!zoidberg
+  gather_facts: no
+
+  tasks:
+
+          - name: Moving a file from controller to remote hosts
+            copy:
+                    src: /home/student/ans/files/fryresume.txt
+                    #dest: ~/fryresume.txt
+                    dest: "/home/{{ ansible_user }}/fryresume.txt"
+
+
+          - name: Remove the file we just copied over
+            file:
+                    path: "/home/{{ ansible_user }}/fryresume.txt"
+                    state: absent
+
+          - name: download a file to my remote server
+            get_url:
+                    url: http://www.clamav.net/downloads/production/clamav-0.99.3.tar.gz
+                    dest: ~/clamav-0.99.3.tar.gz
+                             
